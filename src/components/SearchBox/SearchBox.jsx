@@ -1,4 +1,5 @@
 import css from './SearchBox.module.css';
+import { useSelector } from "react-redux";
 
 export default function SearchBox({ value, onSearch }) {
   return (

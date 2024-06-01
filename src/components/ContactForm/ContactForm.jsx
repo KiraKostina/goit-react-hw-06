@@ -4,6 +4,8 @@ import { nanoid } from 'nanoid';
 import * as Yup from 'yup';
 import css from "../ContactForm/ContactForm.module.css";
 
+import { useSelector } from "react-redux";
+
 const ContactSchema = Yup.object().shape({
   name: Yup.string().min(3, "Too Short!").max(50, "Too Long!").required("Required"),
   number: Yup.string().min(3, "Too Short!").max(50, "Too Long!").required("Required")
@@ -16,7 +18,7 @@ export default function ContactForm({ onAdd }) {
       id: nanoid(),
       ...values,
     });
-    // console.log(values);
+   
     actions.resetForm();
   };
 
