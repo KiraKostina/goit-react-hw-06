@@ -1,4 +1,4 @@
-import { createSlice, nanoid} from '@reduxjs/toolkit';
+import { createSlice, nanoid } from '@reduxjs/toolkit';
 
 const contactsSlice = createSlice({
   name: 'contacts',
@@ -9,30 +9,31 @@ const contactsSlice = createSlice({
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
+  },
+  reducers: {
+    addContact: {
+      reducer(state, action) {
+        state.items.push(action.payload);
+      },
+      prepare(name, number) {
+        return {
+          payload: {
+            id: nanoid(),
+            name,
+            number,
+          },
+        };
+      },
     },
-    reducers: {
-        addContact: {
-            reducer(state, action) { 
-                state.push(action.payload);
-            },
-            prepare(text) { 
-                return {
-                    payload: {
-                        text,
-                        id: nanoid(),
-                        completed: false,
-                    },
-                };
-            },
-
-        },
-        deleteContact(state, action) { 
-            const index = state.findIndex(contact => contact.id === action.payload);
-            state.splice(index, 1);
-        },
+    deleteContact(state, action) {
+      const index = state.items.findIndex(
+        contact => contact.id === action.payload
+      );
+      state.items.splice(index, 1);
     },
+  },
 });
 
 export const { addContact, deleteContact } = contactsSlice.actions;
 export const contactsReducer = contactsSlice.reducer;
-export const selectContacts = (state) => state.contacts;
+export const selectContacts = state => state.contacts.items;
